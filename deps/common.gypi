@@ -4,7 +4,12 @@
 # ===
 
 {
-  'variables': { 'sqlite3%': '' },
+  'variables': {
+    #'sqlite3%': 'internal',
+    'sqlite3%': '/usr/local/include',
+    'sqlite3_libpath%': '/usr/local/lib',
+    'sqlite3_libname%': 'litesync'
+  },
   'target_defaults': {
     'default_configuration': 'Release',
     'msvs_settings': {

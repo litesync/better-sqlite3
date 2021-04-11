@@ -13,7 +13,7 @@
       'type': 'none',
       'hard_dependency': 1,
       'conditions': [
-        ['sqlite3 == ""', {
+        ['sqlite3 == "internal"', {
           'actions': [{
             'action_name': 'extract_sqlite3',
             'inputs': ['sqlite3.tar.gz'],
@@ -52,7 +52,7 @@
         'WARNING_CFLAGS': ['-w'],
       },
       'conditions': [
-        ['sqlite3 == ""', {
+        ['sqlite3 == "internal"', {
           'includes': ['defines.gypi'],
         }, {
           'defines': [
