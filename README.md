@@ -1,6 +1,6 @@
-# better-sqlite3 [![Build Status](https://github.com/JoshuaWise/better-sqlite3/actions/workflows/build.yml/badge.svg)](https://github.com/JoshuaWise/better-sqlite3/actions/workflows/build.yml?query=branch%3Amaster)
+# better-sqlite3-litesync [![Build Status](https://github.com/litesync/better-sqlite3/actions/workflows/build.yml/badge.svg)](https://github.com/litesync/better-sqlite3/actions/workflows/build.yml?query=branch%3Amaster)
 
-The fastest and simplest library for SQLite3 in Node.js.
+LiteSync for Node.js, using better-sqlite3
 
 - Full transaction support
 - High performance, efficiency, and safety
@@ -8,14 +8,6 @@ The fastest and simplest library for SQLite3 in Node.js.
 - Support for user-defined functions, aggregates, virtual tables, and extensions
 - 64-bit integers *(invisible until you need them)*
 - Worker thread support *(for large/slow queries)*
-
-## Help this project stay strong! &#128170;
-
-`better-sqlite3` is used by thousands of developers and engineers on a daily basis. Long nights and weekends were spent keeping this project strong and dependable, with no ask for compensation or funding, until now. If your company uses `better-sqlite3`, ask your manager to consider supporting the project:
-
-- [Become a GitHub sponsor](https://github.com/sponsors/JoshuaWise)
-- [Become a backer on Patreon](https://www.patreon.com/joshuawise)
-- [Make a one-time donation on PayPal](https://www.paypal.me/joshuathomaswise)
 
 ## How other libraries compare
 
@@ -29,7 +21,7 @@ The fastest and simplest library for SQLite3 in Node.js.
 ## Installation
 
 ```bash
-npm install better-sqlite3
+npm install better-sqlite3-litesync
 ```
 
 > You must be using Node.js v14.21.1 or above. Prebuilt binaries are available for [LTS versions](https://nodejs.org/en/about/releases/). If you have trouble installing, check the [troubleshooting guide](./docs/troubleshooting.md).
@@ -37,24 +29,36 @@ npm install better-sqlite3
 ## Usage
 
 ```js
-const db = require('better-sqlite3')('foobar.db', options);
+const options = { verbose: console.log };
+const uri = 'file:test.db?node=secondary&connect=tcp://127.0.0.1:1234';
+const db = require('better-sqlite3-litesync')(uri, options);
 
-const row = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
-console.log(row.firstName, row.lastName, row.email);
+db.on('ready', function() {
+
+  const row = db.prepare('SELECT * FROM users').all();
+  console.log(row.name, row.email);
+
+});
+
+db.on('sync', function() {
+
+  console.log('the database received updates');
+
+});
 ```
 
-Though not required, [it is generally important to set the WAL pragma for performance reasons](https://github.com/WiseLibs/better-sqlite3/blob/master/docs/performance.md).
+You can also check the status with:
 
 ```js
-db.pragma('journal_mode = WAL');
+let res = db.prepare('PRAGMA sync_status').get();
+let status = JSON.parse(res.sync_status);
 ```
 
 ##### In ES6 module notation:
 
 ```js
-import Database from 'better-sqlite3';
-const db = new Database('foobar.db', options);
-db.pragma('journal_mode = WAL');
+import Database from 'better-sqlite3-litesync';
+const db = new Database(uri, options);
 ```
 
 ## Why should I use this instead of [node-sqlite3](https://github.com/mapbox/node-sqlite3)?
@@ -84,8 +88,6 @@ For these situations, you should probably use a full-fledged RDBMS such as [Post
 - [Worker thread support](./docs/threads.md)
 - [Unsafe mode (advanced)](./docs/unsafe.md)
 - [SQLite3 compilation (advanced)](./docs/compilation.md)
-- [Contribution rules](./docs/contribution.md)
-- [Code of conduct](./docs/conduct.md)
 
 # License
 
