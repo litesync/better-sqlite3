@@ -1,13 +1,13 @@
 {
-  "name": "better-sqlite3",
+  "name": "better-sqlite3-litesync",
   "version": "7.4.1",
-  "description": "The fastest and simplest library for SQLite3 in Node.js.",
-  "homepage": "http://github.com/JoshuaWise/better-sqlite3",
+  "description": "The fastest and simplest library for LiteSync in Node.js.",
+  "homepage": "http://github.com/litesync/better-sqlite3",
   "author": "Joshua Wise <joshuathomaswise@gmail.com>",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/JoshuaWise/better-sqlite3.git"
+    "url": "git://github.com/litesync/better-sqlite3.git"
   },
   "dependencies": {
     "bindings": "^1.5.0",

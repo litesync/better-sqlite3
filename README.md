@@ -1,6 +1,6 @@
-# better-sqlite3 [![Build Status](https://github.com/JoshuaWise/better-sqlite3/actions/workflows/build.yml/badge.svg)](https://github.com/JoshuaWise/better-sqlite3/actions/workflows/build.yml?query=branch%3Amaster)
+# better-sqlite3-litesync [![Build Status](https://github.com/litesync/better-sqlite3/actions/workflows/build.yml/badge.svg)](https://github.com/litesync/better-sqlite3/actions/workflows/build.yml?query=branch%3Amaster)
 
-The fastest and simplest library for SQLite3 in Node.js.
+The fastest and simplest library for LiteSync/SQLite3 in Node.js.
 
 - Full transaction support
 - High performance, efficiency, and safety
@@ -8,14 +8,6 @@ The fastest and simplest library for SQLite3 in Node.js.
 - Support for user-defined functions, aggregates, virtual tables, and extensions
 - 64-bit integers *(invisible until you need them)*
 - Worker thread support *(for large/slow queries)*
-
-## Help this project stay strong! &#128170;
-
-`better-sqlite3` is used by thousands of developers and engineers on a daily basis. Long nights and weekends were spent keeping this project strong and dependable, with no ask for compensation or funding, until now. If your company uses `better-sqlite3`, ask your manager to consider supporting the project:
-
-- [Become a GitHub sponsor](https://github.com/sponsors/JoshuaWise)
-- [Become a backer on Patreon](https://www.patreon.com/joshuawise)
-- [Make a one-time donation on PayPal](https://www.paypal.me/joshuathomaswise)
 
 ## How other libraries compare
 
@@ -29,7 +21,7 @@ The fastest and simplest library for SQLite3 in Node.js.
 ## Installation
 
 ```bash
-npm install better-sqlite3
+npm install better-sqlite3-litesync
 ```
 
 > You must be using Node.js v10.20.1 or above. Prebuilt binaries are available for [LTS versions](https://nodejs.org/en/about/releases/).
@@ -39,10 +31,30 @@ npm install better-sqlite3
 ## Usage
 
 ```js
-const db = require('better-sqlite3')('foobar.db', options);
+const options = { verbose: console.log };
+const uri = 'file:test.db?node=secondary&connect=tcp://127.0.0.1:1234';
+const db = require('better-sqlite3-litesync')(uri, options);
 
-const row = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
-console.log(row.firstName, row.lastName, row.email);
+const timer = setInterval(function(){
+  var res = db.prepare('PRAGMA sync_status').get();
+  var status = JSON.parse(res.sync_status);
+  if (status.db_is_ready) {
+    clearInterval(timer);
+    onDbReady();
+  }
+}, 1000);
+
+function onDbReady() {
+
+  const row = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
+  console.log(row.firstName, row.lastName, row.email);
+
+  setTimeout(function(){
+    console.log('closing...');
+    db.close();
+  }, 2000);
+
+}
 ```
 
 ## Why should I use this instead of [node-sqlite3](https://github.com/mapbox/node-sqlite3)?
