@@ -1,7 +1,7 @@
 {
   "name": "better-sqlite3-litesync",
   "version": "8.0.1",
-  "description": "The fastest and simplest library for LiteSync in Node.js.",
+  "description": "LiteSync for Node.js, based on better-sqlite3",
   "homepage": "http://github.com/litesync/better-sqlite3",
   "author": "Joshua Wise <joshuathomaswise@gmail.com>",
   "repository": {
@@ -26,9 +26,7 @@
     "mocha": "^8.3.2",
     "node-gyp": "8.4.1",
     "nodemark": "^0.3.0",
-    "prebuild": "^11.0.4",
-    "sqlite": "^4.1.1",
-    "sqlite3": "^5.0.8"
+    "prebuild": "^11.0.4"
   },
   "overrides": {
     "prebuild": {
@@ -48,13 +46,11 @@
   },
   "license": "MIT",
   "keywords": [
-    "sql",
+    "litesync",
     "sqlite",
     "sqlite3",
-    "transactions",
-    "user-defined functions",
-    "aggregate functions",
-    "window functions",
-    "database"
+    "database replication",
+    "database",
+    "sql"
   ]
 }
