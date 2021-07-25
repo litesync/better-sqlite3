@@ -5,8 +5,7 @@
 
 {
   'variables': {
-    #'sqlite3%': 'internal',
-    'sqlite3%': '/usr/local/include',
+    'sqlite3_include%': '/usr/local/include',
     'sqlite3_libpath%': '/usr/local/lib',
     'sqlite3_libname%': 'litesync'
   },
