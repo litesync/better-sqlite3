@@ -28,14 +28,14 @@
         }],
       ],
       # link to pre-built sqlite3 library
-      'include_dirs': ['<(sqlite3_include)'],
-      'libraries': ['-l<(sqlite3_libname)'],
-      'conditions': [ [ 'OS=="linux"', {'libraries+':['-Wl,-rpath=<@(sqlite3_libpath)']} ] ],
-      'conditions': [ [ 'OS!="win"', {'libraries+':['-L<@(sqlite3_libpath)']} ] ],
+      'include_dirs': ['<(sqlite3_include_dir)'],
+      'libraries': ['-l<(sqlite3_lib_name)'],
+      'conditions': [ [ 'OS=="linux"', {'libraries+':['-Wl,-rpath=<@(sqlite3_lib_path)']} ] ],
+      'conditions': [ [ 'OS!="win"', {'libraries+':['-L<@(sqlite3_lib_path)']} ] ],
       'msvs_settings': {
         'VCLinkerTool': {
           'AdditionalLibraryDirectories': [
-            '<(sqlite3_libpath)'
+            '<(sqlite3_lib_path)'
           ],
         },
       },
@@ -43,14 +43,14 @@
     {
       'target_name': 'test_extension',
       # link to pre-built sqlite3 library
-      'include_dirs': ['<(sqlite3_include)'],
-      'libraries': ['-l<(sqlite3_libname)'],
-      'conditions': [ [ 'OS=="linux"', {'libraries+':['-Wl,-rpath=<@(sqlite3_libpath)']} ] ],
-      'conditions': [ [ 'OS!="win"', {'libraries+':['-L<@(sqlite3_libpath)']} ] ],
+      'include_dirs': ['<(sqlite3_include_dir)'],
+      'libraries': ['-l<(sqlite3_lib_name)'],
+      'conditions': [ [ 'OS=="linux"', {'libraries+':['-Wl,-rpath=<@(sqlite3_lib_path)']} ] ],
+      'conditions': [ [ 'OS!="win"', {'libraries+':['-L<@(sqlite3_lib_path)']} ] ],
       'msvs_settings': {
         'VCLinkerTool': {
           'AdditionalLibraryDirectories': [
-            '<(sqlite3_libpath)'
+            '<(sqlite3_lib_path)'
           ],
         },
       },

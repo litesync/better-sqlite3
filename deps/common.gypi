@@ -5,10 +5,19 @@
 
 {
   'variables': {
-    'sqlite3_include%': '/usr/local/include',
-    'sqlite3_libpath%': '/usr/local/lib',
-    'sqlite3_libname%': 'litesync'
+    'sqlite3_include_dir%': '/usr/local/include',
+    'sqlite3_lib_path%': '/usr/local/lib',
+    'sqlite3_lib_name%': 'litesync'
   },
+  'conditions': [
+    ['OS == "win"', {
+      'variables': {
+        'sqlite3_include_dir': '../deps',
+        'sqlite3_lib_path': '../deps',
+        'sqlite3_lib_name': '../deps/litesync-0.1.lib'
+      },
+    }],
+  ],
   'target_defaults': {
     'default_configuration': 'Release',
     'msvs_settings': {
